@@ -1,0 +1,54 @@
+import pandas as pd
+import os
+import sqlite3
+
+path = r"D:\Users\703143501\Documents\Genpact Internal\H\learning_sql\Jan_2019"
+os.chdir(path)
+
+
+### creating the database
+db_name = 'tables.db'
+conn = sqlite3.connect(db_name)
+
+
+
+### reading csv files and converting to pandas dataframe
+csvs = ['Table' + x + '.csv' for x in 'ABC']
+dfs_names = ['Table' + x for x in 'ABC']
+
+date_columns = ['checkin', 'checkout', 'date']
+dfs = [pd.read_csv(csv, parse_dates = date_columns) for csv in csvs]    # formatting some columns as dates
+
+
+### adding the tables to the database one by one
+assert len(dfs) == len(dfs_names)
+for i in range(len(dfs)):
+    dfs[i].to_sql(dfs_names[i], conn, if_exists='replace', index=False)
+
+
+### excel file
+filename = 'TableD.xlsx'
+file = pd.ExcelFile(filename)
+
+sheetname = 'Sheet1'
+df = file.parse(sheetname)
+df.to_sql('TableD', conn, if_exists='replace', index=False)
+
+
+## printing out the tables of the database
+query = """
+SELECT name
+FROM sqlite_master
+WHERE type='table';
+"""
+
+
+cursor = conn.cursor()
+cursor.execute(query)
+print("The database has the following tables: ")
+print(cursor.fetchall())
+
+## closing the connection to the database
+conn.close()
+
+
