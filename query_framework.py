@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import time
 
 ## making a framework in which SQL query is written in a text file,
 ## and then imported and excuted in this python script
@@ -41,3 +42,9 @@ for each in cursor:
 
 ### closing the connection to the database
 conn.close()
+
+### find the log version number
+log_version = open('log_version.txt', 'r')
+v = eval(log_version.read())
+## new version number
+v = str(v + 1)
