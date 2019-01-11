@@ -1,4 +1,5 @@
 # excel_to_db
-Tool to convert excel sheets to tables in a database
 
-A tool to convert excel sheets to tables in a database, with an interface to run queries on the databse.
+A framework to convert excel and csv files to tables in a database file
+
+and easy SQL querying the database by writing the SQL query in a text file, and running it from a Python script.
