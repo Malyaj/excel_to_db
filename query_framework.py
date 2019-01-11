@@ -48,3 +48,5 @@ log_version = open('log_version.txt', 'r')
 v = eval(log_version.read())
 ## new version number
 v = str(v + 1)
+
+### add functionality to create logs of the queries run - query body, and result
