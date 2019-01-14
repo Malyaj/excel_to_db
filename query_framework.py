@@ -27,26 +27,34 @@ query = " ".join(query.split(newline))
 
 
 ### executing the query
-cursor = conn.execute(query)
+try:
+    cursor = conn.execute(query)
+    flag = True
+except:
+     flag = False
 
-### printing out some information about the query
-print("Query Executed:")
-print(query)
-print("-" * 100)
 
-### printing out the result
-print("Query Result:")
-for each in cursor:
-    print(each)
+if flag:
+    ### printing out some information about the query
+    print("Query Executed:")
+    print(query)
+    print("-" * 100)
+
+    ### printing out the result
+    print("Query Result:")
+    for each in cursor:
+        print(each)
+else:
+    print("Somthing went wrong! Please check the query again.")
+
 
 
 ### closing the connection to the database
 conn.close()
 
 ### find the log version number
-log_version = open('log_version.txt', 'r')
-v = eval(log_version.read())
+#log_version = open('log_version.txt', 'r')
+#v = eval(log_version.read())
 ## new version number
-v = str(v + 1)
+#v = str(v + 1)
 
-### add functionality to create logs of the queries run - query body, and result
